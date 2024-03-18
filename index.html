@@ -8,3 +8,20 @@ struct Producto {
     int cantidad;
     float precio;
 };
+
+queue<Producto> inventario;
+
+void registrarProducto(const Producto& producto) {
+    inventario.push(prpoducto);
+}
+void mostrarInventario() {
+    cout <<"Inventario:" << endl;
+   int size = inventario.size();
+   for (int i = 0; i < size; ++i) {
+    Producto producto = inventario.front();
+    inventario.pop();
+    cout << "ID: " <<producto.id_producto << ", Nombre: " << producto.nombre << ", Cantidad: " << producto.cantidad << ", Precio: " << producto.precio << endl;
+    inventario.push(producto);
+   }
+
+}
