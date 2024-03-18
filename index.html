@@ -42,6 +42,21 @@ void eliminarProducto(int id_producto) {
         queue<Producto> temp;  
         int size = inventario.size();
         bool encontrado = false;
+        for (int i = 0; i < size; ++i) {
+            Producto producto = inventario.front();    
+            inventario.pop();
+            if (producto.id_producto == id_producto && !encontrado) {
+                encontrado = true;
+                continue;
+            }
+            temp.push(producto);
+        }
+        if (!encontrado) {
+            cout << " No se encontro un producto con ese ID. " << endl;
+            return;
+        }
+        inventario = temp;
+        cout << "Producto eliminado exitosamente." << endl;
 }                                                                                                                                      
                                                                                                                                          
 
