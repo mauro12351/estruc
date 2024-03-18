@@ -33,13 +33,14 @@ Producto* buscarProducto(int id_producto) {
     for (int i = 0; i < size; ++i) {
         Producto producto = inventario.front();
         inventario.pop();
-        if (producto.id_producto = id_producto) {
+        if (producto.id_producto == id_producto) {
             inventario.push(producto);
             return &inventario.back();
         } 
-        
+        inventario.push(producto);
 
     }
+    return nullptr;
     
 }
 
