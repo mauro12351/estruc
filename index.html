@@ -1,3 +1,5 @@
+//handry murillo
+//arley camacho
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -12,7 +14,7 @@ struct Producto {
 queue<Producto> inventario;
 
 void registrarProducto(const Producto& producto) {
-    inventario.push(prpoducto);
+    inventario.push(producto);
 }
 void mostrarInventario() {
     cout <<"Inventario:" << endl;
@@ -21,7 +23,20 @@ void mostrarInventario() {
     Producto producto = inventario.front();
     inventario.pop();
     cout << "ID: " <<producto.id_producto << ", Nombre: " << producto.nombre << ", Cantidad: " << producto.cantidad << ", Precio: " << producto.precio << endl;
-    inventario.push(producto);
-   }
-
+    inventario.push(producto);}  
+                                                                                                                                     
+    }
+   producto* buscarproducto( int id_producto){
+   int size = inventario.size();
+   for (int i =0; i <size; ++i){
+   producto producto= inventario.front();                                                                                                                                      
+   inventario.pop();                                                                                                                                      
+   if (producto.id_producto == id_producto){                                                                                                                                     
+   inventario.push(producto);                                                                                                                                      
+   return &inventario.back();                                                                                                                                      
+   }                                                                                                                                      
+     inventario.push(producto);
+    return nullptr;                                                                                                                                     
 }
+
+                                                                                                                                         
