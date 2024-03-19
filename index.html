@@ -146,5 +146,47 @@ int main() {
                                                            
 }
     
-            
-            
+case 4: {
+   int id;                                                              
+      cout<<"ingrese el ID del producto a eliminar:";
+                    cin>> id;
+                    eliminarProducto(id);
+                    break;
+ }
+ case 5: { 
+       cout<<"el valor total del inventario es:"<<calcularValorTotal() <<endl;
+           break;
+
+ case 6: {
+          cout<<" el promedio del precio de los productos es:" <<calcularPromedioPrecios() <<endl;
+              break;
+  case 7: {
+          int id_producto,cantidad;                                                          
+        cout<<"ingrese el ID del producto a vender:";
+              cin>> id_producto;
+              cout<<"ingrese la cantidad de unidades a vender:";
+                  cin>> cantidad;
+                  float totalVenta = venderProductos(id_producto,cantidad);
+                  if (totalVenta > 0) {
+                  cout<<"venta realizada exitosamente.Total a pagar:"<<totalVenta <<endl;
+              }
+                 break;
+              }
+  case 8: {
+        cout<<"saliendo del programa..."<<endl;
+                break;
+        }
+
+         default:{
+         cout<<"Opcion invalida.porfavor, seleccione una opcion valida." <<endl;
+                break;
+                }                                                                
+            }
+          }while (opcion !=8);
+              return 0;
+     }                                                                         
+                                                                    
+                                                                    
+                    
+                    
+                    
