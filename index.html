@@ -84,8 +84,9 @@ void eliminarProducto(int id_producto) {
                 }
         float venderProductos(int id_producto, int cantidad) {
                 Producto* producto = buscarProducto(id_producto);
-                if (producto && prodcuto->cantidad>=cantidad) {
-                
+                if (producto && prodcuto->cantidad >= cantidad) {
+                    Producto->cantidad -= cantidad;
+                    return cantidad * producto->precio;
                 }
         }
             
