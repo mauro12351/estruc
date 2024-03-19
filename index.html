@@ -151,51 +151,43 @@ int main() {
             }
             break;
         }
-    }
-                                                           
-}
-    
-case 4: {
-   int id;                                                              
-      cout<<"ingrese el ID del producto a eliminar:";
-                    cin>> id;
-                    eliminarProducto(id);
-                    break;
- }
- case 5: { 
-       cout<<"el valor total del inventario es:"<<calcularValorTotal() <<endl;
-           break;
-
- case 6: {
-          cout<<" el promedio del precio de los productos es:" <<calcularPromedioPrecios() <<endl;
-              break;
-  case 7: {
-          int id_producto,cantidad;                                                          
-        cout<<"ingrese el ID del producto a vender:";
-              cin>> id_producto;
-              cout<<"ingrese la cantidad de unidades a vender:";
-                  cin>> cantidad;
-                  float totalVenta = venderProductos(id_producto,cantidad);
-                  if (totalVenta > 0) {
-                  cout<<"venta realizada exitosamente.Total a pagar:"<<totalVenta <<endl;
-              }
-                 break;
-              }
-  case 8: {
-        cout<<"saliendo del programa..."<<endl;
+        case 4: {
+                int id;
+                cout << "Ingrese el ID del producto a eliminar: ";
+                cin >> id;
+                eliminarProducto(id);
                 break;
-        }
-
-         default:{
-         cout<<"Opcion invalida.porfavor, seleccione una opcion valida." <<endl;
-                break;
-                }                                                                
             }
-          }while (opcion !=8);
-              return 0;
-     }                                                                         
-                                                                    
-                                                                    
-                    
-                    
-                    
+            case 5: {
+                cout << "El valor total del inventario es: " << calcularValorTotal() << endl;
+                break;
+            }
+            case 6: {
+                cout << "El promedio de precios de los productos es: " << calcularPromedioPrecios() << endl;
+                break;
+            }
+            case 7: {
+                int id_producto, cantidad;
+                cout << "Ingrese el ID del producto a vender: ";
+                cin >> id_producto;
+                cout << "Ingrese la cantidad de unidades a vender: ";
+                cin >> cantidad;
+                float totalVenta = venderProductos(id_producto, cantidad);
+                if (totalVenta > 0) {
+                    cout << "Venta realizada exitosamente. Total a pagar: " << totalVenta << endl;
+                }
+                break;
+            }
+            case 8: {
+                cout << "Saliendo del programa..." << endl;
+                break;
+            }
+            default: {
+                cout << "Opción incorrecta Por favor, seleccione una opción válida." << endl;
+                break;
+            }
+        }
+    } while (opcion != 8);
+
+    return 0;
+}               
