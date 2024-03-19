@@ -102,25 +102,17 @@ int main() {
     int opcion;
     do {
         cout << "\n--- Gestión de Inventario ---" << endl;
-       cout << "---------------------------------" << endl;
         cout << "1. Registrar Producto" << endl;
-       cout << "---------------------------------" << endl;
         cout << "2. Mostrar Inventario" << endl;
-       cout << "---------------------------------" << endl;
         cout << "3. Buscar Producto por ID" << endl;
-       cout << "---------------------------------" << endl;
         cout << "4. Eliminar Producto" << endl;
-       cout << "---------------------------------" << endl;
         cout << "5. Calcular el Valor Total del Inventario" << endl;
-       cout << "---------------------------------" << endl;
         cout << "6. Calcular el Promedio de Precios" << endl;
-       cout << "---------------------------------" << endl;
         cout << "7. Vender Productos" << endl;
-       cout << "---------------------------------" << endl;
         cout << "8. Salir" << endl;
-       cout << "---------------------------------" << endl;
         cout << "Seleccione una opción: ";
         cin >> opcion;
+        cout << "---------------------------------" << endl;
 
         switch (opcion) {
             case 1: {
@@ -130,12 +122,16 @@ int main() {
                 float precio;
                 cout << "Ingrese El ID Del Producto: ";
                 cin >> id;
+                cout << "---------------------------------" << endl;
                 cout << "Ingrese El Nombre Del Producto: ";
                 cin >> nombre;
+                cout << "---------------------------------" << endl;
                 cout << "Ingrese La Cantidad Del Producto: ";
                 cin >> cantidad;
+                cout << "---------------------------------" << endl;
                 cout << "Ingrese El Precio Del Producto: ";
                 cin >> precio;
+                cout << "---------------------------------" << endl;
                 Producto nuevoProducto = {id, nombre, cantidad, precio};
                 registrarProducto(nuevoProducto);
                 cout << "Producto Registrado Exitosamente." << endl;
@@ -144,11 +140,13 @@ int main() {
             case 2: {
                 mostrarInventario();
                 break;
+                cout << "---------------------------------" << endl;
             }
             case 3: {
                 int id;
                 cout << "Ingrese El ID Del Producto A Buscar: ";
                 cin >> id;
+                cout << "---------------------------------" << endl;
                 Producto* producto = buscarProducto(id);
                 if (producto != nullptr) {
                     cout << "ID: " << producto->id_producto << ", Nombre: " << producto->nombre << ", Cantidad: " << producto->cantidad << ", Precio: " << producto->precio << endl;
@@ -161,23 +159,28 @@ int main() {
                 int id;
                 cout << "Ingrese El ID Del Producto A Eliminar: ";
                 cin >> id;
+                cout << "---------------------------------" << endl;
                 eliminarProducto(id);
                 break;
             }
             case 5: {
                 cout << "El Valor Total Del Inventario Es: " << calcularValorTotal() << endl;
+                cout << "---------------------------------" << endl;
                 break;
             }
             case 6: {
                 cout << "El Promedio De Precios De Los Productos Es: " << calcularPromedioPrecios() << endl;
+                cout << "---------------------------------" << endl;
                 break;
             }
             case 7: {
                 int id_producto, cantidad;
                 cout << "Ingrese El ID Del Producto A Vender: ";
                 cin >> id_producto;
+                cout << "---------------------------------" << endl;
                 cout << "Ingrese La Cantidad De Unidades A Vender: ";
                 cin >> cantidad;
+                cout << "---------------------------------" << endl;
                 float totalVenta = venderProductos(id_producto, cantidad);
                 if (totalVenta > 0) {
                     cout << "Venta realizada exitosamente. Total a pagar: " << totalVenta << endl;
@@ -186,6 +189,7 @@ int main() {
             }
             case 8: {
                 cout << "Saliendo Del Programa..." << endl;
+                cout << "---------------------------------" << endl;
                 break;
             }
             default: {
