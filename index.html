@@ -61,9 +61,9 @@ void eliminarProducto(int id_producto) {
                                                                                                                                          
   float calcularValorTotal(){
     float total= 0;                                                                                                                                        
-  queue<producto> temp = inventario;
+  queue<Producto> temp = inventario;
    while(!temp.empty()){
-     producto producto = temp.front(); 
+     Producto producto = temp.front(); 
             temp.pop();
             total + = producto.cantidad * producto.precio;
             }
@@ -73,15 +73,20 @@ void eliminarProducto(int id_producto) {
             float calcularPromedioPrecios(){
             float suma_precios = 0;
             int contador = 0;
-            queue<producto>temp = inventario;
+            queue<Producto>temp = inventario;
                 while(!temp.empty()){
-                producto producto = temp.front();
+                Producto producto = temp.front();
                 temp.pop();
                 suma_precios + = producto.precio;
                 contador++;
             }
                 return contador> 0? suma_precios / contador : 0 ;
                 }
-        
+        float venderProductos(int id_producto, int cantidad) {
+                Producto* producto = buscarProducto(id_producto);
+                if (producto && prodcuto->cantidad>=cantidad) {
+                
+                }
+        }
             
             
