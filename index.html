@@ -1,5 +1,5 @@
-//handry murillo
-//arley camacho
+//Arley Camacho
+//Handryd Murillo
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -16,105 +16,101 @@ queue<Producto> inventario;
 void registrarProducto(const Producto& producto) {
     inventario.push(producto);
 }
+
 void mostrarInventario() {
-    cout <<"Inventario:" << endl;
-   int size = inventario.size();
-   for (int i = 0; i < size; ++i) {
-    Producto producto = inventario.front();
-    inventario.pop();
-    cout << "ID: " <<producto.id_producto << ", Nombre: " << producto.nombre << ", Cantidad: " << producto.cantidad << ", Precio: " << producto.precio << endl;
-    inventario.push(producto);}  
-                                                                                                                                     
+    cout << "Inventario:" << endl;
+    int size = inventario.size();
+    for (int i = 0; i < size; ++i) {
+        Producto producto = inventario.front();
+        inventario.pop();
+        cout << "ID: " << producto.id_producto << ", Nombre: " << producto.nombre << ", Cantidad: " << producto.cantidad << ", Precio: " << producto.precio << endl;
+        inventario.push(producto);
     }
-   producto* buscarproducto( int id_producto){
-   int size = inventario.size();
-   for (int i =0; i <size; ++i){
-   producto producto= inventario.front();                                                                                                                                      
-   inventario.pop();                                                                                                                                      
-   if (producto.id_producto == id_producto){                                                                                                                                     
-   inventario.push(producto);                                                                                                                                      
-   return &inventario.back();                                                                                                                                      
-   }                                                                                                                                      
-     inventario.push(producto);
-    return nullptr;                                                                                                                                     
 }
+
+Producto* buscarProducto(int id_producto) {
+    int size = inventario.size();
+    for (int i = 0; i < size; ++i) {
+        Producto producto = inventario.front();
+        inventario.pop();
+        if (producto.id_producto == id_producto) {
+            inventario.push(producto);
+            return &inventario.back();
+        }
+        inventario.push(producto);
+    }
+    return nullptr;
+}
+
 void eliminarProducto(int id_producto) {
-        queue<Producto> temp;  
-        int size = inventario.size();
-        bool encontrado = false;
-        for (int i = 0; i < size; ++i) {
-            Producto producto = inventario.front();    
-            inventario.pop();
-            if (producto.id_producto == id_producto && !encontrado) {
-                encontrado = true;
-                continue;
-            }
-            temp.push(producto);
+    queue<Producto> temp;
+    int size = inventario.size();
+    bool encontrado = false;
+    for (int i = 0; i < size; ++i) {
+        Producto producto = inventario.front();
+        inventario.pop();
+        if (producto.id_producto == id_producto && !encontrado) {
+            encontrado = true;
+            continue;
         }
-        if (!encontrado) {
-            cout << " No se encontro un producto con ese ID. " << endl;
-            return;
-        }
-        inventario = temp;
-        cout << "Producto eliminado exitosamente." << endl;
-}                                                                                                                                      
-                                                                                                                                         
-  float calcularValorTotal(){
-    float total= 0;                                                                                                                                        
-  queue<Producto> temp = inventario;
-   while(!temp.empty()){
-     Producto producto = temp.front(); 
-            temp.pop();
-            total + = producto.cantidad * producto.precio;
-            }
-            retun total;
-            }
-            
-            float calcularPromedioPrecios(){
-            float suma_precios = 0;
-            int contador = 0;
-            queue<Producto>temp = inventario;
-                while(!temp.empty()){
-                Producto producto = temp.front();
-                temp.pop();
-                suma_precios + = producto.precio;
-                contador++;
-            }
-                return contador> 0? suma_precios / contador : 0 ;
-                }
-        float venderProductos(int id_producto, int cantidad) {
-                Producto* producto = buscarProducto(id_producto);
-                if (producto && prodcuto->cantidad >= cantidad) {
-                    Producto->cantidad -= cantidad;
-                    return cantidad * producto->precio;
-                } else {
-                    cout << " El producto no existe." << endl;
-                    return 0;
-                }
+        temp.push(producto);
+    }
+    if (!encontrado) {
+        cout << "No se encontró un producto con ese ID." << endl;
+        return;
+    }
+    inventario = temp;
+    cout << "Producto eliminado exitosamente." << endl;
 }
-                                                           
+
+float calcularValorTotal() {
+    float total = 0;
+    queue<Producto> temp = inventario;
+    while (!temp.empty()) {
+        Producto producto = temp.front();
+        temp.pop();
+        total += producto.cantidad * producto.precio;
+    }
+    return total;
+}
+
+float calcularPromedioPrecios() {
+    float suma_precios = 0;
+    int contador = 0;
+    queue<Producto> temp = inventario;
+    while (!temp.empty()) {
+        Producto producto = temp.front();
+        temp.pop();
+        suma_precios += producto.precio;
+        contador++;
+    }
+    return contador > 0 ? suma_precios / contador : 0;
+}
+
+float venderProductos(int id_producto, int cantidad) {
+    Producto* producto = buscarProducto(id_producto);
+    if (producto && producto->cantidad >= cantidad) {
+        producto->cantidad -= cantidad;
+        return cantidad * producto->precio;
+    } else {
+        cout << "No hay suficientes existencias del producto o el producto no existe." << endl;
+        return 0;
+    }
+}
+
 int main() {
     int opcion;
     do {
-        cout << "\n--- Sistema de Inventario ---" << endl;
-        cout << "---------------------------------------------" << endl;
+        cout << "\n--- Gestión de Inventario ---" << endl;
         cout << "1. Registrar Producto" << endl;
-        cout << "---------------------------------------------" << endl;
         cout << "2. Mostrar Inventario" << endl;
-        cout << "---------------------------------------------" << endl;
-        cout << "3. Buscar Producto Por ID" << endl;
-        cout << "---------------------------------------------" << endl;
+        cout << "3. Buscar Producto por ID" << endl;
         cout << "4. Eliminar Producto" << endl;
-        cout << "---------------------------------------------" << endl;
-        cout << "5. Calcular El Valor Total Del Inventario" << endl;
-        cout << "---------------------------------------------" << endl;
-        cout << "6. Calcular El Promedio De Precios" << endl;
-        cout << "---------------------------------------------" << endl;
+        cout << "5. Calcular el Valor Total del Inventario" << endl;
+        cout << "6. Calcular el Promedio de Precios" << endl;
         cout << "7. Vender Productos" << endl;
-        cout << "---------------------------------------------" << endl;
         cout << "8. Salir" << endl;
-        cout << "---------------------------------------------" << endl;
-        cout << "Seleccione Una Opcion:";
+        cout << "Seleccione una opción: ";
         cin >> opcion;
 
         switch (opcion) {
@@ -132,45 +128,46 @@ int main() {
                 cout << "Ingrese El Precio Del Producto: ";
                 cin >> precio;
                 Producto nuevoProducto = {id, nombre, cantidad, precio};
-                cout << "Producto Registro Exitosamente." <<endl;
+                registrarProducto(nuevoProducto);
+                cout << "Producto Registrado Exitosamente." << endl;
                 break;
             }
             case 2: {
                 mostrarInventario();
-                break;                                          
-        }
-        case 3: {
-            int id;
-            cout << "Ingrese El ID Del Producto A Buscar: ";
-            cin >> id;
-            Producto* producto = buscarProducto(id);
-            if (producto != nullptr) {
-                cout << "ID: " << producto->id_producto << ", Nombre: " << producto->cantidad << ", Precio: " << producto->precio << endl;
-            } else {
-                cout << "No Existe Un Producto Con Ese ID." << endl;
+                break;
             }
-            break;
-        }
-        case 4: {
+            case 3: {
                 int id;
-                cout << "Ingrese el ID del producto a eliminar: ";
+                cout << "Ingrese El ID Del Producto A Buscar: ";
+                cin >> id;
+                Producto* producto = buscarProducto(id);
+                if (producto != nullptr) {
+                    cout << "ID: " << producto->id_producto << ", Nombre: " << producto->nombre << ", Cantidad: " << producto->cantidad << ", Precio: " << producto->precio << endl;
+                } else {
+                    cout << "No se Exite Un Producto con ese ID." << endl;
+                }
+                break;
+            }
+            case 4: {
+                int id;
+                cout << "Ingrese El ID Del Producto A Eliminar: ";
                 cin >> id;
                 eliminarProducto(id);
                 break;
             }
             case 5: {
-                cout << "El valor total del inventario es: " << calcularValorTotal() << endl;
+                cout << "El Valor Total Del Inventario Es: " << calcularValorTotal() << endl;
                 break;
             }
             case 6: {
-                cout << "El promedio de precios de los productos es: " << calcularPromedioPrecios() << endl;
+                cout << "El Promedio De Precios De Los Productos Es: " << calcularPromedioPrecios() << endl;
                 break;
             }
             case 7: {
                 int id_producto, cantidad;
-                cout << "Ingrese el ID del producto a vender: ";
+                cout << "Ingrese El ID Del Producto A Vender: ";
                 cin >> id_producto;
-                cout << "Ingrese la cantidad de unidades a vender: ";
+                cout << "Ingrese La Cantidad De Unidades A Vender: ";
                 cin >> cantidad;
                 float totalVenta = venderProductos(id_producto, cantidad);
                 if (totalVenta > 0) {
@@ -179,15 +176,15 @@ int main() {
                 break;
             }
             case 8: {
-                cout << "Saliendo del programa..." << endl;
+                cout << "Saliendo Del Programa..." << endl;
                 break;
             }
             default: {
-                cout << "Opción incorrecta Por favor, seleccione una opción válida." << endl;
+                cout << "Opción Incorrecta Por Favor, Seleccione Una Opción Válida." << endl;
                 break;
             }
         }
     } while (opcion != 8);
 
     return 0;
-}               
+}
