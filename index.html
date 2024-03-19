@@ -87,7 +87,64 @@ void eliminarProducto(int id_producto) {
                 if (producto && prodcuto->cantidad >= cantidad) {
                     Producto->cantidad -= cantidad;
                     return cantidad * producto->precio;
+                } else {
+                    cout << " El producto no existe." << endl;
+                    return 0;
                 }
+}
+                                                           
+int main() {
+    int opcion;
+    do {
+        cout << "\n--- Sistema de Inventario ---" << endl;
+        cout << "1. Registrar Producto" << endl;
+        cout << "2. Mostrar Inventario" << endl;
+        cout << "3. Buscar Producto Por ID" << endl;
+        cout << "4. Eliminar Producto" << endl;
+        cout << "5. Calcular El Valor Total Del Inventario" << endl;
+        cout << "6. Calcular El Promedio De Precios" << endl;
+        cout << "7. Vender Productos" << endl;
+        cout << "8. Salir" << endl;
+        cout << "Seleccione Una Opcion:";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1: {
+                int id;
+                string nombre;
+                int cantidad;
+                float precio;
+                cout << "Ingrese El ID Del Producto: ";
+                cin >> id;
+                cout << "Ingrese El Nombre Del Producto: ";
+                cin >> nombre;
+                cout << "Ingrese La Cantidad Del Producto: ";
+                cin >> cantidad;
+                cout << "Ingrese El Precio Del Producto: ";
+                cin >> precio;
+                Producto nuevoProducto = {id, nombre, cantidad, precio};
+                cout << "Producto Registro Exitosamente." <<endl;
+                break;
+            }
+        }   case 2: {
+                mostrarInventario();
+                break;                                          
         }
+        case 3: {
+            int id;
+            cout << "Ingrese El ID Del Producto A Buscar: ";
+            cin >> id;
+            Producto* producto = buscarProducto(id);
+            if (producto != nullptr) {
+                cout << "ID: " << producto->id_producto << ", Nombre: " << producto->cantidad << ", Precio: " << producto->precio << endl;
+            } else {
+                cout << "No Existe Un Producto Con Ese ID." << endl;
+            }
+            break;
+        }
+    }
+                                                           
+}
+    
             
             
