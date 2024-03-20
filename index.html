@@ -1,46 +1,89 @@
 #include <iostream>
-#include <queue>
+
 using namespace std;
 
-struct Producto {
-    int id_producto;
-    string nombre;
-    int cantidad;
-    float precio;
+struct paciente{
+
+    char Nombre[100];
+    int telefono;
+    
+    paciente *sigientepac;
 
 };
 
-queue<Producto> inventario;
+paciente *primero,*ultimo,*auxil;
 
-void registrarProducto(const Producto& producto) {
-    inventario.push(prpoducto);
-}
-void mostrarInventario() {
-    cout <<"Inventario:" << endl;
-   int size = inventario.size();
-   for (int i = 0; i < size; ++i) {
-    Producto producto = inventario.front();
-    inventario.pop();
-    cout << "ID: " <<producto.id_producto << ", Nombre: " << producto.nombre << ", Cantidad: " << producto.cantidad << ", Precio: " << producto.precio << endl;
-    inventario.push(producto);
+void menu();
+void Registrarpacientes();
 
-   }
+int main(){
 
+    menu();
+    return 0;
 }
 
-Producto* buscarProducto(int id_producto) {
-    int size = inventario.size();
-    for (int i = 0; i < size; ++i) {
-        Producto producto = inventario.front();
-        inventario.pop();
-        if (producto.id_producto == id_producto) {
-            inventario.push(producto);
-            return &inventario.back();
-        } 
-        inventario.push(producto);
+void menu(){
 
-    }
-    return nullptr;
+    int opcion=0;
+
+    do{
+        cout<<"\n----------Menu----------"<<endl
+        <<"1.Registrar paciente"<<endl
+        <<"2.buscar paciente"<<endl
+        <<"3.Salir"<<endl<<endl
+        <<"opcion: ";
+        cin>>opcion;
+
+        switch(opcion){
+
+            case 1:
+                RegistrarClientes();
+            break;
+
+            case 2:
+                MostrarCli();
+            break;
+
+            case 3:
+               cout<<"saliendo...";
+               system("cls");
+            break;
+
+            default: cout<<"opcion no disponible";
+            break;
+            
+        }
+
+    }while(opcion !=3);
     
+    void Registrarpacientes(){
+
+    ultimo = (struct paciente *) malloc(sizeof(struct paciente));
+    ultimo->sigientepac = NULL;
+    cout<<"Ingrese los datos del paciente:"<<endl;
+    cout<<"Nombre: ";
+    cin>> ultimo->Nombre;
+    cout<<"telefono: ";
+    cin>> ultimo->telefono;
+
+    if(!primero){
+
+        primero = ultimo;
+        ultimo = NULL;
+        free(ultimo);
+    }
+    else{
+
+        auxil = primero;
+        while(auxil->sigientepac != NULL){
+            auxil = auxil->sigientepac;
+        }
+        auxil->sigientepac = ultimo;
+        auxil = ultimo = NULL;
+        free(ultimo);
+        free(auxil);
+    }
+}
+
 }
 
