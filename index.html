@@ -1,89 +1,70 @@
 #include <iostream>
-
 using namespace std;
 
-struct paciente{
-
+struct paciente {
     char Nombre[100];
     int telefono;
-    
-    paciente *sigientepac;
-
+    paciente* sigientepac;
 };
 
-paciente *primero,*ultimo,*auxil;
+paciente* primero = nullptr;
+paciente* ultimo = nullptr;
+paciente* auxil = nullptr;
 
 void menu();
 void Registrarpacientes();
 
-int main(){
-
+int main() {
     menu();
     return 0;
 }
 
-void menu(){
+void menu() {
+    int opcion = 0;
 
-    int opcion=0;
+    do {
+        cout << "\n----------Menu----------" << endl
+             << "1.Registrar paciente" << endl
+             << "2.buscar paciente" << endl
+             << "3.Salir" << endl
+             << endl
+             << "opcion: ";
+        cin >> opcion;
 
-    do{
-        cout<<"\n----------Menu----------"<<endl
-        <<"1.Registrar paciente"<<endl
-        <<"2.buscar paciente"<<endl
-        <<"3.Salir"<<endl<<endl
-        <<"opcion: ";
-        cin>>opcion;
-
-        switch(opcion){
-
+        switch (opcion) {
             case 1:
-                RegistrarClientes();
-            break;
-
+                Registrarpacientes();
+                break;
             case 2:
-                MostrarCli();
-            break;
-
+                // Implementa la función MostrarCli
+                cout << "Función MostrarCli no implementada" << endl;
+                break;
             case 3:
-               cout<<"saliendo...";
-               system("cls");
-            break;
-
-            default: cout<<"opcion no disponible";
-            break;
-            
+                cout << "Saliendo..." << endl;
+                break;
+            default:
+                cout << "Opción no disponible" << endl;
+                break;
         }
+    } while (opcion != 3);
+}
 
-    }while(opcion !=3);
-    
-    void Registrarpacientes(){
+void Registrarpacientes() {
+    ultimo = new paciente;
+    ultimo->sigientepac = nullptr;
+    cout << "Ingrese los datos del paciente:" << endl;
+    cout << "Nombre: ";
+    cin >> ultimo->Nombre;
+    cout << "Teléfono: ";
+    cin >> ultimo->telefono;
 
-    ultimo = (struct paciente *) malloc(sizeof(struct paciente));
-    ultimo->sigientepac = NULL;
-    cout<<"Ingrese los datos del paciente:"<<endl;
-    cout<<"Nombre: ";
-    cin>> ultimo->Nombre;
-    cout<<"telefono: ";
-    cin>> ultimo->telefono;
-
-    if(!primero){
-
+    if (!primero) {
         primero = ultimo;
-        ultimo = NULL;
-        free(ultimo);
-    }
-    else{
-
+    } else {
         auxil = primero;
-        while(auxil->sigientepac != NULL){
+        while (auxil->sigientepac != nullptr) {
             auxil = auxil->sigientepac;
         }
         auxil->sigientepac = ultimo;
-        auxil = ultimo = NULL;
-        free(ultimo);
-        free(auxil);
     }
 }
-
-}
-
