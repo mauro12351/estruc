@@ -1,70 +1,12 @@
+//Handryd Murillo 
+//Arley Camacho
+
 #include <iostream>
+#include <unordered_map>
+#include <stack>
 using namespace std;
 
-struct paciente {
-    char Nombre[100];
-    int telefono;
-    paciente* sigientepac;
+struct nodo {
+    int placa;
+    int tipo; // 1 es para carro y 2 es para la moto
 };
-
-paciente* primero = nullptr;
-paciente* ultimo = nullptr;
-paciente* auxil = nullptr;
-
-void menu();
-void Registrarpacientes();
-
-int main() {
-    menu();
-    return 0;
-}
-
-void menu() {
-    int opcion = 0;
-
-    do {
-        cout << "\n----------Menu----------" << endl
-             << "1.Registrar paciente" << endl
-             << "2.buscar paciente" << endl
-             << "3.Salir" << endl
-             << endl
-             << "opcion: ";
-        cin >> opcion;
-
-        switch (opcion) {
-            case 1:
-                Registrarpacientes();
-                break;
-            case 2:
-                // Implementa la función MostrarCli
-                cout << "Función MostrarCli no implementada" << endl;
-                break;
-            case 3:
-                cout << "Saliendo..." << endl;
-                break;
-            default:
-                cout << "Opción no disponible" << endl;
-                break;
-        }
-    } while (opcion != 3);
-}
-
-void Registrarpacientes() {
-    ultimo = new paciente;
-    ultimo->sigientepac = nullptr;
-    cout << "Ingrese los datos del paciente:" << endl;
-    cout << "Nombre: ";
-    cin >> ultimo->Nombre;
-    cout << "Teléfono: ";
-    cin >> ultimo->telefono;
-
-    if (!primero) {
-        primero = ultimo;
-    } else {
-        auxil = primero;
-        while (auxil->sigientepac != nullptr) {
-            auxil = auxil->sigientepac;
-        }
-        auxil->sigientepac = ultimo;
-    }
-}
