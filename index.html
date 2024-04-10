@@ -76,3 +76,58 @@ void eliminar(int placa) {
         tempStack.pop();
     }
 }
+  int main() {
+    int opcion;
+    do {
+        cout<< "\nMenu:Paqueadero para vehiculos";
+        cout<< "\n1.Registra vehiculo \n2. Mostrar parqueadero\n3. Retirar vehiculo \n4. Cacular valor recaudado\n5. salir\n";
+            cout<< ""<<endl;
+                    cout<<"Selecciona una opcion:";
+                     cin>> opcion;
+                     cout<<""<<endl;
+
+        switch (opcion) {
+                case 1: {
+                    int tipo, placa;
+                     cout<< "seleccione el tipo de vehiculo (1 para carro, 2 para moto):";
+                        cin>> tipo;
+                        cout<<""<<endl;
+                        if (tipo !=1 && tipo != 2){
+                          cout<<" Tipo de vehiculo no valido."<<endl;
+                        break;
+                       }
+                        cout<< " Ingrese el numero de la placa del vehiculo:";
+                              cin>> placa;
+                              cout<<""<<endl;
+                    registrar(tipo, placa);
+                            break; 
+                       }
+                   case 2: 
+                        mostrar();
+                        cout<<""<<endl;
+                        break;
+                   case 3: {
+                        int placa;
+                        cout<<"Ingrese el numero de la placa del vehiculo que desee retirar:";
+                            cin>> placa;
+                            cout<<""<<endl;
+                              eliminar(placa);
+                                         break;
+                            }
+                    case 4: 
+                          cout<<"Total del recaudado hasta el momento: $"<<totalRecaudado<<endl;
+                           cout<<""<<endl;
+                                        break;
+                    case 5:
+                            cout<<"Cerrando el programa para parqueadero de vehiculos. ¡Hasta luego!"<<endl;
+                            cout<<""<<endl;
+
+                            cout<<" futuros programadores Arley Camacho y Handryd Murillo;)"<<endl;
+                                         break;
+                                default:
+                                  cout<<"Opcion invalida.intentalo de nuevo."<<endl;
+                                        }
+                                } while (opcion !=5);
+                                              return 0;
+                           }                                                       
+                                                                                  
