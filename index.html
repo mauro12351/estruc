@@ -10,7 +10,7 @@ struct nodo {
 
 stack<nodo> parqueadero;
 int totalRecaudado = 0;
-unordered_map<int, int> placaToTipo; // Mapeo de placa a tipo de vehículo
+unordered_map<int, int> placaToTipo; // sirve para identificar que la clave y como el valor estan almacenados son enteros
 
 void registrar(int tipo, int placa) {
     nodo vehiculo;
