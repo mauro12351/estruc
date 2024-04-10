@@ -1,3 +1,6 @@
+//Handryd Murillo Valencia
+//Arley Camacho
+
 #include <iostream>
 #include <unordered_map>
 #include <stack>
@@ -5,12 +8,12 @@ using namespace std;
 
 struct nodo {
     int placa;
-    int tipo; // 1 para carro, 2 para moto
+    int tipo; // 1 es para carro y 2 es para la moto
 };
 
 stack<nodo> parqueadero;
 int totalRecaudado = 0;
-unordered_map<int, int> placaToTipo; // sirve para identificar que la clave y como el valor estan almacenados son enteros
+unordered_map<int, int> placaToTipo; // sirve para identificar que la clave y como el valor que esta almacenado son enteros
 
 void registrar(int tipo, int placa) {
     nodo vehiculo;
@@ -18,12 +21,12 @@ void registrar(int tipo, int placa) {
     vehiculo.tipo = tipo;
     parqueadero.push(vehiculo);
 
-    placaToTipo[placa] = tipo; // Almacenar la asociación entre placa y tipo de vehículo
+    placaToTipo[placa] = tipo; // para almacenar la asociación entre la placa y el tipo de vehículo
 
     if (tipo == 1)
-        totalRecaudado += 1000; // Tarifa de carro
+        totalRecaudado += 1000; // Valor del carro
     else if (tipo == 2)
-        totalRecaudado += 500; // Tarifa de moto
+        totalRecaudado += 500; // Valor de la moto
 
     cout << "Vehículo registrado correctamente." << endl;
 }
@@ -36,6 +39,7 @@ void mostrar() {
 
     stack<nodo> temp = parqueadero;
     cout << "Estado del parqueadero (LIFO):" << endl;
+    cout << "---------------------------------" << endl;
     while (!temp.empty()) {
         nodo vehiculo = temp.top();
         cout << "Placa: " << vehiculo.placa << ", Tipo: ";
@@ -47,6 +51,7 @@ void mostrar() {
         temp.pop();
     }
 }
+
 void eliminar(int placa) {
     if (parqueadero.empty()) {
         cout << "El parqueadero está vacío, no hay vehículos para retirar." << endl;
@@ -57,9 +62,9 @@ void eliminar(int placa) {
     while (!parqueadero.empty() && parqueadero.top().placa != placa) {
         int tipo = parqueadero.top().tipo;
         if (tipo == 1)
-            totalRecaudado += 100; // Costo adicional por movimiento de carro
+            totalRecaudado += 100; // este es el costo adicional por cada movimiento de los carros
         else if (tipo == 2)
-            totalRecaudado += 50; // Costo adicional por movimiento de moto
+            totalRecaudado += 50; // este es el costo adicional por cada movimiento de las motos
         tempStack.push(parqueadero.top());
         parqueadero.pop();
     }
@@ -76,58 +81,59 @@ void eliminar(int placa) {
         tempStack.pop();
     }
 }
-  int main() {
+
+int main() {
     int opcion;
     do {
-        cout<< "\nMenu:Paqueadero para vehiculos";
-        cout<< "\n1.Registra vehiculo \n2. Mostrar parqueadero\n3. Retirar vehiculo \n4. Cacular valor recaudado\n5. salir\n";
-            cout<< ""<<endl;
-                    cout<<"Selecciona una opcion:";
-                     cin>> opcion;
-                     cout<<""<<endl;
-
+        cout << "\nMenú:Paqueadero Para Vehiculos";
+        cout <<"\n1. Registrar vehículo\n2. Mostrar parqueadero\n3. Retirar vehículo\n4. Calcular valor recaudado\n5. Salir\n";
+        cout << "---------------------------------" << endl;
+        cout << "Selecciona una opción: ";
+        cin >> opcion;
+        cout << "---------------------------------" << endl;
         switch (opcion) {
-                case 1: {
-                    int tipo, placa;
-                     cout<< "seleccione el tipo de vehiculo (1 para carro, 2 para moto):";
-                        cin>> tipo;
-                        cout<<""<<endl;
-                        if (tipo !=1 && tipo != 2){
-                          cout<<" Tipo de vehiculo no valido."<<endl;
-                        break;
-                       }
-                        cout<< " Ingrese el numero de la placa del vehiculo:";
-                              cin>> placa;
-                              cout<<""<<endl;
-                    registrar(tipo, placa);
-                            break; 
-                       }
-                   case 2: 
-                        mostrar();
-                        cout<<""<<endl;
-                        break;
-                   case 3: {
-                        int placa;
-                        cout<<"Ingrese el numero de la placa del vehiculo que desee retirar:";
-                            cin>> placa;
-                            cout<<""<<endl;
-                              eliminar(placa);
-                                         break;
-                            }
-                    case 4: 
-                          cout<<"Total del recaudado hasta el momento: $"<<totalRecaudado<<endl;
-                           cout<<""<<endl;
-                                        break;
-                    case 5:
-                            cout<<"Cerrando el programa para parqueadero de vehiculos. ¡Hasta luego!"<<endl;
-                            cout<<""<<endl;
+            case 1: {
+                int tipo, placa;
+                cout << "Seleccione el tipo de vehículo (1 para carro, 2 para moto): ";
+                cin >> tipo;
+                cout << "---------------------------------" << endl;
+                if (tipo != 1 && tipo != 2) {
+                    cout << "Tipo de vehículo no válido." << endl;
+                    break;
+                }
+                cout << "Ingrese el número de la placa del vehículo: ";
+                cin >> placa;
+                cout << "---------------------------------" << endl;
+                registrar(tipo, placa);
+                break;
+            }
+            case 2:
+                mostrar();
+                cout << "---------------------------------" << endl;
+                break;
+               
+            case 3: {
+                int placa;
+                cout << "Ingrese el número de la placa del vehículo que desee retirar: ";
+                cin >> placa;
+                cout << "---------------------------------" << endl;
+                eliminar(placa);
+                break;
+            }
+            case 4:
+                cout << "Total del recaudado hasta el momento: $" << totalRecaudado << endl;
+                cout << "---------------------------------" << endl;
+                break;
+                
+            case 5:
+                cout << "Cerrando el programa para parqueadero de vehiculos. ¡Hasta luego!" << endl;
+                cout << "---------------------------------" << endl;
+                cout << "-----Futuros Programadores Arley Camacho y Murillo Handryd ;) -----" << endl;
+                break;
+            default:
+                cout << "Opción inválida. Inténtalo de nuevo." << endl;
+        }
+    } while (opcion != 5);
 
-                            cout<<" futuros programadores Arley Camacho y Handryd Murillo;)"<<endl;
-                                         break;
-                                default:
-                                  cout<<"Opcion invalida.intentalo de nuevo."<<endl;
-                                        }
-                                } while (opcion !=5);
-                                              return 0;
-                           }                                                       
-                                                                                  
+    return 0;
+}
