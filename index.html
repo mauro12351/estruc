@@ -47,24 +47,32 @@ void mostrar() {
         temp.pop();
     }
 }
-      void eliminar(int placa){
-        if(parqueadero.empty()){
-          cout<<"el parqueadero esta vacio, no hay vehiculos para retirar."<<endl;
-                        return;
-      }  
+void eliminar(int placa) {
+    if (parqueadero.empty()) {
+        cout << "El parqueadero está vacío, no hay vehículos para retirar." << endl;
+        return;
+    }
 
-       stack<nodo> tempStack;
-              while (!parqueadero.empty()&& parqueadero.top().placa!= placa){
-              int tipo = parqueadero.top().tipo;
-              if (tipo== 1) totalRecaudado +=100; // este es el costo adiccional por cada movimiento de carro
-              else if (tipo == 2) totalRecaudado += 50; //el costo adiccional por el movimiento de cada moto
-
+    stack<nodo> tempStack;
+    while (!parqueadero.empty() && parqueadero.top().placa != placa) {
+        int tipo = parqueadero.top().tipo;
+        if (tipo == 1)
+            totalRecaudado += 100; // Costo adicional por movimiento de carro
+        else if (tipo == 2)
+            totalRecaudado += 50; // Costo adicional por movimiento de moto
         tempStack.push(parqueadero.top());
-              parqueadero.pop();
-              }
-               if (!parqueadero.empty()){
-               cout<<" vehiculo con placa"<< placa<< "retirado correctamente."<<endl;
-            parqueadero.pop();
-         } else {
-                  cout<<" No se encontro un vehiculo con ese numero de placa"<< placa<<"."<<endl;
-                 }
+        parqueadero.pop();
+    }
+
+    if (!parqueadero.empty()) {
+        cout << "Vehículo con placa " << placa << " retirado correctamente." << endl;
+        parqueadero.pop();
+    } else {
+        cout << "No se encontró un vehículo con ese numero de placa " << placa << "." << endl;
+    }
+
+    while (!tempStack.empty()) {
+        parqueadero.push(tempStack.top());
+        tempStack.pop();
+    }
+}
