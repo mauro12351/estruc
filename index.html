@@ -1,6 +1,3 @@
-//Handryd Murillo 
-//Arley Camacho
-
 #include <iostream>
 #include <unordered_map>
 #include <stack>
@@ -8,5 +5,45 @@ using namespace std;
 
 struct nodo {
     int placa;
-    int tipo; // 1 es para carro y 2 es para la moto
+    int tipo; // 1 para carro, 2 para moto
 };
+
+stack<nodo> parqueadero;
+int totalRecaudado = 0;
+unordered_map<int, int> placaToTipo; // Mapeo de placa a tipo de vehículo
+
+void registrar(int tipo, int placa) {
+    nodo vehiculo;
+    vehiculo.placa = placa;
+    vehiculo.tipo = tipo;
+    parqueadero.push(vehiculo);
+
+    placaToTipo[placa] = tipo; // Almacenar la asociación entre placa y tipo de vehículo
+
+    if (tipo == 1)
+        totalRecaudado += 1000; // Tarifa de carro
+    else if (tipo == 2)
+        totalRecaudado += 500; // Tarifa de moto
+
+    cout << "Vehículo registrado correctamente." << endl;
+}
+
+void mostrar() {
+    if (parqueadero.empty()) {
+        cout << "La pila está vacía." << endl;
+        return;
+    }
+
+    stack<nodo> temp = parqueadero;
+    cout << "Estado del parqueadero (LIFO):" << endl;
+    while (!temp.empty()) {
+        nodo vehiculo = temp.top();
+        cout << "Placa: " << vehiculo.placa << ", Tipo: ";
+        if (vehiculo.tipo == 1)
+            cout << "Carro";
+        else if (vehiculo.tipo == 2)
+            cout << "Moto";
+        cout << endl;
+        temp.pop();
+    }
+}
