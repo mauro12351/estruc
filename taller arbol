@@ -1,1 +1,28 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <malloc.h>
+using namespace std;
 
+struct Estudiante {
+    int codigo;
+    string fechaNacimiento;
+    Estudiante *izq;
+    Estudiante *der;
+};
+
+Estudiante *raizCodigo, *raizFecha, *aux, *aux2;
+
+Estudiante* buscar(int codigo, Estudiante* &padre, Estudiante* raiz) {
+    Estudiante* nodo = raiz;
+    padre = NULL;
+
+    while(nodo != NULL && nodo->codigo != codigo) {
+        padre = nodo;
+        if(codigo < nodo->codigo) {
+            nodo = nodo->izq;
+        } else {
+            nodo = nodo->der;
+        }
+    }
+
+    return nodo;
