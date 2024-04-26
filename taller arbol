@@ -1,1 +1,16 @@
+#include <iostream>
+#include <malloc.h>
+#include <string>
+using namespace std;
 
+struct Estudiante {
+    string codigo;
+    string nombres;
+    string apellidos;
+    string fechaNacimiento; 
+    Estudiante *izq = NULL;
+    Estudiante *der = NULL;
+    Estudiante *padre = NULL;
+};
+
+Estudiante *raizCodigo, *raizFecha, *aux, *aux2;
