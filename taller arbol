@@ -21,3 +21,18 @@ Estudiante* encontrarMasJoven(Estudiante* estudiante) {
         estudiante = estudiante->izq;
     return estudiante;
 }
+
+void reemplazar(Estudiante* a, Estudiante* b) {
+    if(a->padre == nullptr)
+        raizCodigo = b;
+    else if(a == a->padre->izq)
+        a->padre->izq = b;
+    else
+        a->padre->der = b;
+    if(b != nullptr)
+        b->padre = a->padre;
+}
+
+void destruirNodo(Estudiante* estudiante) {
+    delete estudiante;
+}
