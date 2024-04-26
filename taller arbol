@@ -13,4 +13,26 @@ struct Estudiante {
     Estudiante *padre = NULL;
 };
 
-Estudiante *raizCodigo, *raizFecha, *aux, *aux2;
+Estudiante *raizCodigo = NULL, *raizFecha = NULL, *aux = NULL, *aux2 = NULL;
+
+void registrar(){
+    aux = new Estudiante;
+    cout << "Codigo: ";
+    cin >> aux->codigo;
+    cout << "Nombres: ";
+    cin >> aux->nombres;
+    cout << "Apellidos: ";
+    cin >> aux->apellidos;
+    cout << "Fecha de Nacimiento (YYYYMMDD): ";
+    cin >> aux->fechaNacimiento;
+    if(raizCodigo == NULL){
+        raizCodigo = aux;
+        raizFecha = aux;
+    }
+    else {
+        aux2 = raizCodigo;
+        posicionar(&raizCodigo, aux->codigo, true);
+        aux2 = raizFecha;
+        posicionar(&raizFecha, aux->fechaNacimiento, false);
+    }
+}
