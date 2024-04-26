@@ -1,38 +1,23 @@
 #include <iostream>
-#include <malloc.h>
 #include <string>
+#include <cstdlib> // Incluir la biblioteca para usar malloc
 using namespace std;
 
 struct Estudiante {
-    string codigo;
+    int codigo;
     string nombres;
     string apellidos;
     string fechaNacimiento; 
-    Estudiante *izq = NULL;
-    Estudiante *der = NULL;
-    Estudiante *padre = NULL;
+    Estudiante *izq;
+    Estudiante *der;
+    Estudiante *subArbolFecha;
+    Estudiante *padre;
 };
 
-Estudiante *raizCodigo = NULL, *raizFecha = NULL, *aux = NULL, *aux2 = NULL;
+Estudiante *raizCodigo = nullptr;
 
-void registrar(){
-    aux = new Estudiante;
-    cout << "Codigo: ";
-    cin >> aux->codigo;
-    cout << "Nombres: ";
-    cin >> aux->nombres;
-    cout << "Apellidos: ";
-    cin >> aux->apellidos;
-    cout << "Fecha de Nacimiento (YYYYMMDD): ";
-    cin >> aux->fechaNacimiento;
-    if(raizCodigo == NULL){
-        raizCodigo = aux;
-        raizFecha = aux;
-    }
-    else {
-        aux2 = raizCodigo;
-        posicionar(&raizCodigo, aux->codigo, true);
-        aux2 = raizFecha;
-        posicionar(&raizFecha, aux->fechaNacimiento, false);
-    }
+Estudiante* encontrarMasJoven(Estudiante* estudiante) {
+    while(estudiante && estudiante->izq != nullptr)
+        estudiante = estudiante->izq;
+    return estudiante;
 }
