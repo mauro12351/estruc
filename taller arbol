@@ -14,25 +14,58 @@ struct Estudiante {
     Estudiante *padre;
 };
 
-Estudiante *raizCodigo = nullptr;
+Estudiante *raizCodigo = null; // para encontrar el estudiante + joven
 
 Estudiante* encontrarMasJoven(Estudiante* estudiante) {
-    while(estudiante && estudiante->izq != nullptr)
+    while(estudiante && estudiante->izq != null)
         estudiante = estudiante->izq;
     return estudiante;
 }
 
-void reemplazar(Estudiante* a, Estudiante* b) {
-    if(a->padre == nullptr)
+void reemplazar(Estudiante* a, Estudiante* b) { // cambiar de estudiante
+    if(a->padre == null)
         raizCodigo = b;
     else if(a == a->padre->izq)
         a->padre->izq = b;
     else
         a->padre->der = b;
-    if(b != nullptr)
+    if(b != null)
         b->padre = a->padre;
 }
 
-void destruirNodo(Estudiante* estudiante) {
+void destruirNodo(Estudiante* estudiante) { //para eliminar estudiante
     delete estudiante;
 }
+void eliminarEstudiante(Estudiante*estudianteAEliminar){
+    if(estudianteAEliminar->izq==null)
+       reemplazar(estudianteAEliminar,estudianteAEliminar->der);
+    else if(estudianteAEliminar->der==null)
+       reemplazar(estudianteAEliminar,estudianteAEliminar->izq);
+    else{ 
+        Estudiante*temp= encontrarMasJoven(estudianteAEliminar->der);
+    if(temp->padre!=estudianteAEliminar){
+        reemplazar(temp, temp->der);
+         temp->der=estudianteAEliminar->der;
+         temp->der->padre=temp;
+}
+         reemplazar(estudianteAEliminar,temp);
+         temp->izq=estudianteAEliminar->izq;
+         temp->izq->padre=temp;
+}
+ destruirNodo(estudianteAEliminar);
+}
+ void eliminar(int codigo){
+       Estudiante*temp=raizCodigo;
+    while(temp!= null){
+    if(codigo < temp-> codigo)
+       temp= temp->izq;
+    else if (codigo > temp-> codigo)
+       temp= temp->der; 
+    else {
+       eliminarEstudiante(temp);
+          return;
+  }
+}
+ cout<<"El estudiante con codigo"<<codigo<<"no se encuentra en el sistema."<<endl;
+}
+
