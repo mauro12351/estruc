@@ -14,22 +14,22 @@ struct Estudiante {
     Estudiante *padre;
 };
 
-Estudiante *raizCodigo = nullptr; // Es para encontrar al estudiante + joven
+Estudiante *raizCodigo = NULL; // Es para encontrar al estudiante + joven
 
 Estudiante* encontrarMasJoven(Estudiante* estudiante) {
-    while(estudiante && estudiante->izq != nullptr)
+    while(estudiante && estudiante->izq != NULL)
         estudiante = estudiante->izq;
     return estudiante;
 }
 
 void reemplazar(Estudiante* a, Estudiante* b) { 
-    if(a->padre == nullptr)
+    if(a->padre == NULL)
         raizCodigo = b;
     else if(a == a->padre->izq)
         a->padre->izq = b;
     else
         a->padre->der = b;
-    if(b != nullptr)
+    if(b != NULL)
         b->padre = a->padre;
 }
 
@@ -38,9 +38,9 @@ void destruirNodo(Estudiante* estudiante) { // Para eliminar un estudiante
 }
 
 void eliminarEstudiante(Estudiante* estudianteAEliminar) {
-    if(estudianteAEliminar->izq == nullptr)
+    if(estudianteAEliminar->izq == NULL)
         reemplazar(estudianteAEliminar, estudianteAEliminar->der);
-    else if(estudianteAEliminar->der == nullptr)
+    else if(estudianteAEliminar->der == NULL)
         reemplazar(estudianteAEliminar, estudianteAEliminar->izq);
     else {
         Estudiante* temp = encontrarMasJoven(estudianteAEliminar->der);
@@ -58,7 +58,7 @@ void eliminarEstudiante(Estudiante* estudianteAEliminar) {
 
 void eliminar(int codigo) {
     Estudiante* temp = raizCodigo;
-    while(temp != nullptr) {
+    while(temp != NULL) {
         if(codigo < temp->codigo)
             temp = temp->izq;
         else if(codigo > temp->codigo)
@@ -72,7 +72,7 @@ void eliminar(int codigo) {
 }
 
 void insertarPorCodigo(Estudiante *&raiz, Estudiante *nuevo) { // Insertar al estudiante al arbol por su codigo
-    if (raiz == nullptr) {
+    if (raiz == NULL) {
         raiz = nuevo;
     } else {
         if (nuevo->codigo < raiz->codigo) {
@@ -86,7 +86,7 @@ void insertarPorCodigo(Estudiante *&raiz, Estudiante *nuevo) { // Insertar al es
 }
 
 void insertarPorFecha(Estudiante *&raiz, Estudiante *nuevo) {
-    if (raiz == nullptr) {
+    if (raiz == NULL) {
         raiz = nuevo;
     } else {
         if (nuevo->fechaNacimiento < raiz->fechaNacimiento) {
@@ -107,10 +107,10 @@ void registrar() {
     cin >> nuevo->apellidos;
     cout << "Fecha de Nacimiento (YYYYMMDD): ";
     cin >> nuevo->fechaNacimiento;
-    nuevo->izq = nullptr;
-    nuevo->der = nullptr;
-    nuevo->padre = nullptr;
-    nuevo->subArbolFecha = nullptr;
+    nuevo->izq = NULL;
+    nuevo->der = NULL;
+    nuevo->padre = NULL;
+    nuevo->subArbolFecha = NULL;
 
     insertarPorCodigo(raizCodigo, nuevo);
     insertarPorFecha(nuevo->subArbolFecha, nuevo);
