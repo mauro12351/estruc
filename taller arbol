@@ -14,7 +14,7 @@ struct Estudiante {
     Estudiante *padre;
 };
 
-Estudiante *raizCodigo = nullptr; 
+Estudiante *raizCodigo = nullptr; // Es para encontrar al estudiante + joven
 
 Estudiante* encontrarMasJoven(Estudiante* estudiante) {
     while(estudiante && estudiante->izq != nullptr)
@@ -22,7 +22,7 @@ Estudiante* encontrarMasJoven(Estudiante* estudiante) {
     return estudiante;
 }
 
-void reemplazar(Estudiante* a, Estudiante* b) {
+void reemplazar(Estudiante* a, Estudiante* b) { 
     if(a->padre == nullptr)
         raizCodigo = b;
     else if(a == a->padre->izq)
@@ -33,7 +33,7 @@ void reemplazar(Estudiante* a, Estudiante* b) {
         b->padre = a->padre;
 }
 
-void destruirNodo(Estudiante* estudiante) {
+void destruirNodo(Estudiante* estudiante) { // Para eliminar un estudiante
     delete estudiante;
 }
 
@@ -71,7 +71,7 @@ void eliminar(int codigo) {
     cout << "El estudiante con código " << codigo << " no se encuentra en el sistema." << endl;
 }
 
-void insertarPorCodigo(Estudiante *&raiz, Estudiante *nuevo) {
+void insertarPorCodigo(Estudiante *&raiz, Estudiante *nuevo) { // Insertar al estudiante al arbol por su codigo
     if (raiz == nullptr) {
         raiz = nuevo;
     } else {
