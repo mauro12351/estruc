@@ -14,7 +14,8 @@ struct Estudiante {
     Estudiante *padre;
 };
 
-Estudiante *raizCodigo = NULL; // Es para encontrar al estudiante + joven
+Estudiante *raizCodigoPreorden = NULL;
+Estudiante *raizCodigoInorden = NULL;
 
 Estudiante* encontrarMasJoven(Estudiante* estudiante) {
     while(estudiante && estudiante->izq != NULL)
@@ -22,9 +23,9 @@ Estudiante* encontrarMasJoven(Estudiante* estudiante) {
     return estudiante;
 }
 
-void reemplazar(Estudiante* a, Estudiante* b) { 
+void reemplazar(Estudiante* a, Estudiante* b) {
     if(a->padre == NULL)
-        raizCodigo = b;
+        raizCodigoPreorden = b;
     else if(a == a->padre->izq)
         a->padre->izq = b;
     else
@@ -33,7 +34,7 @@ void reemplazar(Estudiante* a, Estudiante* b) {
         b->padre = a->padre;
 }
 
-void destruirNodo(Estudiante* estudiante) { // Para eliminar un estudiante
+void destruirNodo(Estudiante* estudiante) {
     delete estudiante;
 }
 
@@ -51,27 +52,37 @@ void eliminarEstudiante(Estudiante* estudianteAEliminar) {
         }
         reemplazar(estudianteAEliminar, temp);
         temp->izq = estudianteAEliminar->izq;
-        temp->izq->padre = temp;
+        if(temp->izq != NULL) // Agregué esta línea para asegurarme de establecer el padre correctamente
+            temp->izq->padre = temp;
     }
     destruirNodo(estudianteAEliminar);
 }
 
 void eliminar(int codigo) {
-    Estudiante* temp = raizCodigo;
+    Estudiante* temp = raizCodigoPreorden;
+    Estudiante* estudianteAEliminar = nullptr;
+    // Buscar al estudiante por su código
     while(temp != NULL) {
         if(codigo < temp->codigo)
             temp = temp->izq;
         else if(codigo > temp->codigo)
             temp = temp->der;
         else {
-            eliminarEstudiante(temp);
-            return;
+            estudianteAEliminar = temp;
+            break;
         }
     }
-    cout << "El estudiante con código " << codigo << " no se encuentra en el sistema." << endl;
+    // Si no se encontró al estudiante, mostrar un mensaje y salir
+    if(estudianteAEliminar == nullptr) {
+        cout << "El estudiante con código " << codigo << " no se encuentra en el sistema." << endl;
+        return;
+    }
+    // Eliminar al estudiante
+    eliminarEstudiante(estudianteAEliminar);
+    cout << "El estudiante con código " << codigo << " ha sido eliminado correctamente." << endl;
 }
 
-void insertarPorCodigo(Estudiante *&raiz, Estudiante *nuevo) { // Insertar al estudiante al arbol por su codigo
+void insertarPorCodigo(Estudiante *&raiz, Estudiante *nuevo) {
     if (raiz == NULL) {
         raiz = nuevo;
     } else {
@@ -97,21 +108,21 @@ void insertarPorFecha(Estudiante *&raiz, Estudiante *nuevo) {
     }
 }
 
- void registrar() {
+void registrar() {
     Estudiante *nuevo = new Estudiante;
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Código: ";
     cin >> nuevo->codigo;
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Nombres: ";
     cin >> nuevo->nombres;
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Apellidos: ";
     cin >> nuevo->apellidos;
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Fecha de Nacimiento (YYYYMMDD): ";
     cin >> nuevo->fechaNacimiento;
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     nuevo->izq = NULL;
     nuevo->der = NULL;
     nuevo->padre = NULL;
@@ -121,7 +132,8 @@ void insertarPorFecha(Estudiante *&raiz, Estudiante *nuevo) {
     insertarPorCodigo(raizCodigoInorden, nuevo);
     insertarPorFecha(nuevo->subArbolFecha, nuevo);
 }
- void preorden(Estudiante *recursive) {
+
+void preorden(Estudiante *recursive) {
     if(recursive != NULL) {
         cout << "Código: " << recursive->codigo << endl;
         cout << "Nombres: " << recursive->nombres << endl;
@@ -155,46 +167,45 @@ void postorden(Estudiante *recursive) {
 }
 
 void recorrerPorCodigoPreorden(Estudiante *raiz) {
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Estudiantes en Preorden (Árbol de Código):" << endl;
     preorden(raiz);
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
 }
 
-
 void recorrerPorCodigoInorden(Estudiante *raiz) {
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Estudiantes en Inorden (Árbol de Código):" << endl;
     inorden(raiz);
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
 }
 
 void recorrerPorCodigoPostorden(Estudiante *raiz) {
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Estudiantes en Postorden (Árbol de Código):" << endl;
     postorden(raiz);
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
 }
 
 void recorrerPorFechaPreorden(Estudiante *subArbolFecha) {
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Estudiantes en Preorden (Subárbol de Fecha de Nacimiento):" << endl;
     preorden(subArbolFecha);
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
 }
 
 void recorrerPorFechaInorden(Estudiante *subArbolFecha) {
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Estudiantes en Inorden (Subárbol de Fecha de Nacimiento):" << endl;
     inorden(subArbolFecha);
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
 }
 
 void recorrerPorFechaPostorden(Estudiante *subArbolFecha) {
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
     cout << "Estudiantes en Postorden (Subárbol de Fecha de Nacimiento):" << endl;
     postorden(subArbolFecha);
-    cout << "" << endl;
+    cout << "---------------------------------" << endl;
 }
 
 int main() {
@@ -218,22 +229,22 @@ int main() {
                 registrar();
                 break;
             case 2: 
-                recorrerPorCodigoPreorden(raizCodigoPreorden); // Pasamos la raíz del árbol preorden
+                recorrerPorCodigoPreorden(raizCodigoPreorden);
                 break;
             case 3: 
-                recorrerPorCodigoInorden(raizCodigoInorden);   // Pasamos la raíz del árbol inorden
+                recorrerPorCodigoInorden(raizCodigoInorden);
                 break;
             case 4: 
-                recorrerPorCodigoPostorden(raizCodigoPreorden); // Pasamos la raíz del árbol preorden
+                recorrerPorCodigoPostorden(raizCodigoPreorden);
                 break;
             case 5: 
-                recorrerPorFechaPreorden(raizCodigoPreorden->subArbolFecha); // Pasamos la raíz del árbol preorden
+                recorrerPorFechaPreorden(raizCodigoPreorden->subArbolFecha);
                 break;
             case 6: 
-                recorrerPorFechaInorden(raizCodigoInorden->subArbolFecha);   // Pasamos la raíz del árbol inorden
+                recorrerPorFechaInorden(raizCodigoInorden->subArbolFecha);
                 break;
             case 7: 
-                recorrerPorFechaPostorden(raizCodigoPreorden->subArbolFecha); // Pasamos la raíz del árbol preorden
+                recorrerPorFechaPostorden(raizCodigoPreorden->subArbolFecha);
                 break;
             case 8: {
                 int codigo;
