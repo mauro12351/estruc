@@ -52,7 +52,7 @@ void eliminarEstudiante(Estudiante*estudianteAEliminar){
          temp->izq=estudianteAEliminar->izq;
          temp->izq->padre=temp;
 }
- destruirNodo(estudianteAEliminar);
+ destruirNodo(estudianteAEliminar);// eliminar estudiante
 }
  void eliminar(int codigo){
        Estudiante*temp=raizCodigo;
@@ -68,4 +68,27 @@ void eliminarEstudiante(Estudiante*estudianteAEliminar){
 }
  cout<<"El estudiante con codigo"<<codigo<<"no se encuentra en el sistema."<<endl;
 }
-
+ void insertarPorCodigo(Estudiante*&raiz, Estudiante* nuevo){ // insertar estudiante al arbool
+    if(raiz==null){
+       raiz= nuevo;
+}   else{
+    if(nuevo->codigo<raiz->codigo){
+       insertarPorCodigo(raiz->izq,nuevo);
+       raiz->izq->padre = raiz;
+}   else{
+       insertarPorCodigo(raiz->der,nuevo);
+       raiz->der->padre = raiz;
+     }
+   }
+}
+ void insertarPorFecha(Estudiante*&raiz,Estudiante* nuevo){
+    if(raiz==null){
+       raiz= nuevo;
+   }else {
+    if (nuevo->fechaNacimiento<raiz->fechaNacimiento) {
+        insertarPorFecha(raiz->izq,nuevo);
+   }else {
+         insertarPorFecha(raiz->der,nuevo);
+   }
+  }
+}
