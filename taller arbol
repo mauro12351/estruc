@@ -97,21 +97,25 @@ void insertarPorFecha(Estudiante *&raiz, Estudiante *nuevo) {
     }
 }
 
-void registrar() {
+ void registrar() {
     Estudiante *nuevo = new Estudiante;
+    cout << "" << endl;
     cout << "Código: ";
     cin >> nuevo->codigo;
+    cout << "" << endl;
     cout << "Nombres: ";
     cin >> nuevo->nombres;
+    cout << "" << endl;
     cout << "Apellidos: ";
     cin >> nuevo->apellidos;
+    cout << "" << endl;
     cout << "Fecha de Nacimiento (YYYYMMDD): ";
     cin >> nuevo->fechaNacimiento;
+    cout << "" << endl;
     nuevo->izq = NULL;
     nuevo->der = NULL;
     nuevo->padre = NULL;
     nuevo->subArbolFecha = NULL;
 
-    insertarPorCodigo(raizCodigo, nuevo);
-    insertarPorFecha(nuevo->subArbolFecha, nuevo);
-}
+
+  
