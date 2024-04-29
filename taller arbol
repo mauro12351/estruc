@@ -99,19 +99,19 @@ void insertarPorFecha(Estudiante *&raiz, Estudiante *nuevo) {
 
  void registrar() {
     Estudiante *nuevo = new Estudiante;
-    cout << "---------------------------------" << endl;
+    cout << "" << endl;
     cout << "Código: ";
     cin >> nuevo->codigo;
-    cout << "---------------------------------" << endl;
+    cout << "" << endl;
     cout << "Nombres: ";
     cin >> nuevo->nombres;
-    cout << "---------------------------------" << endl;
+    cout << "" << endl;
     cout << "Apellidos: ";
     cin >> nuevo->apellidos;
-    cout << "---------------------------------" << endl;
+    cout << "" << endl;
     cout << "Fecha de Nacimiento (YYYYMMDD): ";
     cin >> nuevo->fechaNacimiento;
-    cout << "---------------------------------" << endl;
+    cout << "" << endl;
     nuevo->izq = NULL;
     nuevo->der = NULL;
     nuevo->padre = NULL;
@@ -120,4 +120,135 @@ void insertarPorFecha(Estudiante *&raiz, Estudiante *nuevo) {
     insertarPorCodigo(raizCodigoPreorden, nuevo);
     insertarPorCodigo(raizCodigoInorden, nuevo);
     insertarPorFecha(nuevo->subArbolFecha, nuevo);
+}
+ void preorden(Estudiante *recursive) {
+    if(recursive != NULL) {
+        cout << "Código: " << recursive->codigo << endl;
+        cout << "Nombres: " << recursive->nombres << endl;
+        cout << "Apellidos: " << recursive->apellidos << endl;
+        cout << "Fecha de Nacimiento: " << recursive->fechaNacimiento << endl;
+        preorden(recursive->izq);
+        preorden(recursive->der);
+    }
+}
+
+void inorden(Estudiante *recursive) {
+    if(recursive != NULL) {
+        inorden(recursive->izq);
+        cout << "Código: " << recursive->codigo << endl;
+        cout << "Nombres: " << recursive->nombres << endl;
+        cout << "Apellidos: " << recursive->apellidos << endl;
+        cout << "Fecha de Nacimiento: " << recursive->fechaNacimiento << endl;
+        inorden(recursive->der);
+    }
+}
+
+void postorden(Estudiante *recursive) {
+    if(recursive != NULL) {
+        postorden(recursive->izq);
+        postorden(recursive->der);
+        cout << "Código: " << recursive->codigo << endl;
+        cout << "Nombres: " << recursive->nombres << endl;
+        cout << "Apellidos: " << recursive->apellidos << endl;
+        cout << "Fecha de Nacimiento: " << recursive->fechaNacimiento << endl;
+    }
+}
+
+void recorrerPorCodigoPreorden(Estudiante *raiz) {
+    cout << "" << endl;
+    cout << "Estudiantes en Preorden (Árbol de Código):" << endl;
+    preorden(raiz);
+    cout << "" << endl;
+}
+
+
+void recorrerPorCodigoInorden(Estudiante *raiz) {
+    cout << "" << endl;
+    cout << "Estudiantes en Inorden (Árbol de Código):" << endl;
+    inorden(raiz);
+    cout << "" << endl;
+}
+
+void recorrerPorCodigoPostorden(Estudiante *raiz) {
+    cout << "" << endl;
+    cout << "Estudiantes en Postorden (Árbol de Código):" << endl;
+    postorden(raiz);
+    cout << "" << endl;
+}
+
+void recorrerPorFechaPreorden(Estudiante *subArbolFecha) {
+    cout << "" << endl;
+    cout << "Estudiantes en Preorden (Subárbol de Fecha de Nacimiento):" << endl;
+    preorden(subArbolFecha);
+    cout << "" << endl;
+}
+
+void recorrerPorFechaInorden(Estudiante *subArbolFecha) {
+    cout << "" << endl;
+    cout << "Estudiantes en Inorden (Subárbol de Fecha de Nacimiento):" << endl;
+    inorden(subArbolFecha);
+    cout << "" << endl;
+}
+
+void recorrerPorFechaPostorden(Estudiante *subArbolFecha) {
+    cout << "" << endl;
+    cout << "Estudiantes en Postorden (Subárbol de Fecha de Nacimiento):" << endl;
+    postorden(subArbolFecha);
+    cout << "" << endl;
+}
+
+int main() {
+    int opc = 0;
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Registrar Estudiante" << endl;
+        cout << "2. Recorrer Estudiantes por Código en Preorden" << endl;
+        cout << "3. Recorrer Estudiantes por Código en Inorden" << endl;
+        cout << "4. Recorrer Estudiantes por Código en Postorden" << endl;
+        cout << "5. Recorrer Estudiantes por Fecha de Nacimiento en Preorden" << endl;
+        cout << "6. Recorrer Estudiantes por Fecha de Nacimiento en Inorden" << endl;
+        cout << "7. Recorrer Estudiantes por Fecha de Nacimiento en Postorden" << endl;
+        cout << "8. Eliminar Estudiante" << endl;
+        cout << "9. Salir" << endl;
+        cout << "Ingrese su opción: ";
+        cin >> opc;
+
+        switch(opc) {
+            case 1: 
+                registrar();
+                break;
+            case 2: 
+                recorrerPorCodigoPreorden(raizCodigoPreorden); // Pasamos la raíz del árbol preorden
+                break;
+            case 3: 
+                recorrerPorCodigoInorden(raizCodigoInorden);   // Pasamos la raíz del árbol inorden
+                break;
+            case 4: 
+                recorrerPorCodigoPostorden(raizCodigoPreorden); // Pasamos la raíz del árbol preorden
+                break;
+            case 5: 
+                recorrerPorFechaPreorden(raizCodigoPreorden->subArbolFecha); // Pasamos la raíz del árbol preorden
+                break;
+            case 6: 
+                recorrerPorFechaInorden(raizCodigoInorden->subArbolFecha);   // Pasamos la raíz del árbol inorden
+                break;
+            case 7: 
+                recorrerPorFechaPostorden(raizCodigoPreorden->subArbolFecha); // Pasamos la raíz del árbol preorden
+                break;
+            case 8: {
+                int codigo;
+                cout << "Ingrese el código del estudiante a eliminar: ";
+                cin >> codigo;
+                eliminar(codigo);
+                break;
+            }
+            case 9:
+                cout << "Saliendo del programa..." << endl;
+                break;
+            default:
+                cout << "Opción no válida. Intente de nuevo." << endl;
+        }
+    } while (opc != 9);
+
+    return 0;
 }
