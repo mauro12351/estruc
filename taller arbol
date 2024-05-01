@@ -1,4 +1,4 @@
-#include <iostream>  // handry murillo y Arley camacho
+#include <iostream> 
 #include <string>
 #include <cstdlib> // Incluir la biblioteca para usar malloc
 using namespace std;
