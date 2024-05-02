@@ -1,1 +1,14 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
 
+struct Estudiante {
+    string codigo;
+    string nombres;
+    string apellidos;
+    string fechaNacimiento;
+    Estudiante *izq;
+    Estudiante *der;
+    Estudiante *subArbolFecha;
+    Estudiante *padre;
+};
