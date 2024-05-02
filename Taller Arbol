@@ -60,6 +60,7 @@ void posicionarFecha(){
         }
     }
 }
+
 void registrar(){
     aux = new Estudiante;
     cout << "Codigo: ";
@@ -92,6 +93,8 @@ void preorden(Estudiante *recursive){
         cout << "Codigo " << recursive->codigo << ", Nombres " << recursive->nombres << ", Apellidos " << recursive->apellidos << ", Fecha de Nacimiento " << recursive->fechaNacimiento << endl;
         preorden(recursive->izq);
         preorden(recursive->der);
+    } else {
+        cout << "El codigo del estudiante no existe en el sistema." << endl;
     }
 }
 
@@ -100,6 +103,8 @@ void inorden(Estudiante *recursive){
         inorden(recursive->izq);
         cout << "Codigo " << recursive->codigo << ", Nombres " << recursive->nombres << ", Apellidos " << recursive->apellidos << ", Fecha de Nacimiento " << recursive->fechaNacimiento << endl;
         inorden(recursive->der);
+    } else {
+        cout << "El codigo del estudiante no existe en el sistema." << endl;
     }
 }
 
@@ -108,11 +113,115 @@ void posorden(Estudiante *recursive){
         posorden(recursive->izq);
         posorden(recursive->der);
         cout << "Codigo " << recursive->codigo << ", Nombres " << recursive->nombres << ", Apellidos " << recursive->apellidos << ", Fecha de Nacimiento " << recursive->fechaNacimiento << endl;
+    } else {
+        cout << "El codigo del estudiante no existe en el sistema." << endl;
     }
+
 }
 
 Estudiante* encontrarMasIzquierdo(Estudiante* recursive){
     while(recursive && recursive->izq != NULL)
         recursive = recursive->izq;
     return recursive;
+}
+
+void reemplazar(Estudiante* a, Estudiante* b) {
+    if(a->padre == NULL)
+        raiz = b;
+    else if(a == a->padre->izq)
+        a->padre->izq = b;
+    else
+        a->padre->der = b;
+    if(b != NULL)
+        b->padre = a->padre;
+}
+
+void destruirNodo(Estudiante* recursive) {
+    delete recursive;
+}
+
+void eliminar(string codigo){
+    Estudiante* temp = raiz;
+    Estudiante* nodoAEliminar = NULL;
+    while(temp != NULL) {
+        if(codigo < temp->codigo)
+            temp = temp->izq;
+        else if(codigo > temp->codigo)
+            temp = temp->der;
+        else {
+            nodoAEliminar = temp;
+            break;
+        }
+    }
+    if(nodoAEliminar == NULL) {
+        cout << "El estudiante con codigo " << codigo << " no se encuentra en el sistema." << endl;
+        return;
+    }
+    if(nodoAEliminar->izq == NULL)
+        reemplazar(nodoAEliminar, nodoAEliminar->der);
+    else if(nodoAEliminar->der == NULL)
+        reemplazar(nodoAEliminar, nodoAEliminar->izq);
+    else {
+        Estudiante* temp = encontrarMasIzquierdo(nodoAEliminar->der);
+        if(temp->padre != nodoAEliminar) {
+            reemplazar(temp, temp->der);
+            temp->der = nodoAEliminar->der;
+            temp->der->padre = temp;
+        }
+        reemplazar(nodoAEliminar, temp);
+        temp->izq = nodoAEliminar->izq;
+        temp->izq->padre = temp;
+    }
+    destruirNodo(nodoAEliminar);
+    cout << "El estudiante con codigo " << codigo << " ha sido eliminado correctamente." << endl;
+
+    temp = raiz->subArbolFecha;
+    Estudiante* padreFecha = NULL;
+    while(temp != NULL) {
+        if(codigo < temp->codigo) {
+            padreFecha = temp;
+            temp = temp->izq;
+        }
+        else if(codigo > temp->codigo) {
+            padreFecha = temp;
+            temp = temp->der;
+        }
+        else {
+            if(padreFecha == NULL)
+                raiz->subArbolFecha = NULL;
+            else if(temp == padreFecha->izq)
+                padreFecha->izq = NULL;
+            else
+                padreFecha->der = NULL;
+            destruirNodo(temp);
+            break;
+        }
+    }
+}
+
+int main(){
+    int opc = 0;
+    do {
+        cout << "1. Registrar Estudiante" << endl;
+        cout << "2. Recorrer Arbol Preorden" << endl;
+        cout << "3. Recorrer Arbol Inorden" << endl;
+        cout << "4. Recorrer Arbol Posorden" << endl;
+        cout << "5. Eliminar Estudiante" << endl;
+        cout << "6. Salir" << endl;
+        cin >> opc;
+        switch(opc){
+            case 1: registrar(); break;
+            case 2: preorden(raiz); break;
+            case 3: inorden(raiz); break;
+            case 4: posorden(raiz); break;
+            case 5: 
+                string codigo;
+                cout << "Ingrese el codigo del estudiante a eliminar: ";
+                cin >> codigo;
+                eliminar(codigo);
+                break;
+        }
+    } while(opc != 6);
+    return 0;
+    
 }
