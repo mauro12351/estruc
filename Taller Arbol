@@ -60,3 +60,59 @@ void posicionarFecha(){
         }
     }
 }
+void registrar(){
+    aux = new Estudiante;
+    cout << "Codigo: ";
+    cin >> aux->codigo;
+    cout << "Nombres: ";
+    cin >> aux->nombres;
+    cout << "Apellidos: ";
+    cin >> aux->apellidos;
+    cout << "Fecha de Nacimiento: ";
+    cin >> aux->fechaNacimiento;
+    aux->izq = aux->der = aux->subArbolFecha = NULL;
+    if(raiz == NULL){
+        raiz = aux;
+    }
+    else {
+        aux2 = raiz;
+        posicionar();
+    }
+    if(raiz->subArbolFecha == NULL){
+        raiz->subArbolFecha = aux;
+    }
+    else {
+        auxFecha = raiz->subArbolFecha;
+        posicionarFecha();
+    }
+}
+
+void preorden(Estudiante *recursive){
+    if(recursive != NULL){
+        cout << "Codigo " << recursive->codigo << ", Nombres " << recursive->nombres << ", Apellidos " << recursive->apellidos << ", Fecha de Nacimiento " << recursive->fechaNacimiento << endl;
+        preorden(recursive->izq);
+        preorden(recursive->der);
+    }
+}
+
+void inorden(Estudiante *recursive){
+    if(recursive != NULL){
+        inorden(recursive->izq);
+        cout << "Codigo " << recursive->codigo << ", Nombres " << recursive->nombres << ", Apellidos " << recursive->apellidos << ", Fecha de Nacimiento " << recursive->fechaNacimiento << endl;
+        inorden(recursive->der);
+    }
+}
+
+void posorden(Estudiante *recursive){
+    if(recursive != NULL){
+        posorden(recursive->izq);
+        posorden(recursive->der);
+        cout << "Codigo " << recursive->codigo << ", Nombres " << recursive->nombres << ", Apellidos " << recursive->apellidos << ", Fecha de Nacimiento " << recursive->fechaNacimiento << endl;
+    }
+}
+
+Estudiante* encontrarMasIzquierdo(Estudiante* recursive){
+    while(recursive && recursive->izq != NULL)
+        recursive = recursive->izq;
+    return recursive;
+}
