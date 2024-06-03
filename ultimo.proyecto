@@ -120,6 +120,7 @@ Embarcacion* insertar(Embarcacion* embarcacion) {
 
     return embarcacion;
 }
+
 Embarcacion* BuscarEmbarca(int matricula) {
     aux = raiz;
     while (aux != NULL && aux->matricula != matricula) {
@@ -230,5 +231,53 @@ Embarcacion* encontrarNodoEliminar(Embarcacion* nodo, int matricula) {
         return encontrarNodoEliminar(nodo->der, matricula);
     } else {
         return nodo;
+    }
+}
+
+Embarcacion* encontrarMasIzquierdo(Embarcacion* nodo) {
+    while (nodo && nodo->izq != NULL) {
+        nodo = nodo->izq;
+    }
+    return nodo;
+}
+
+Embarcacion* eliminarViaje(Embarcacion* nodo, int matricula) {
+    if (nodo == NULL) {
+        return nodo;
+    }
+
+    if (matricula < nodo->matricula) {
+        nodo->izq = eliminarViaje(nodo->izq, matricula);
+    } else if (matricula > nodo->matricula) {
+        nodo->der = eliminarViaje(nodo->der, matricula);
+    } else {
+        if (nodo->izq == NULL) {
+            Embarcacion* temp = nodo->der;
+            free(nodo);
+            return temp;
+        } else if (nodo->der == NULL) {
+            Embarcacion* temp = nodo->izq;
+            free(nodo);
+            return temp;
+        }
+
+        Embarcacion* temp = encontrarMasIzquierdo(nodo->der);
+        nodo->matricula = temp->matricula;
+        nodo->der = eliminarViaje(nodo->der, temp->matricula);
+    }
+    return nodo;
+}
+
+void eliminarViaje() {
+    int matricula;
+    cout << "Ingrese la matrícula del viaje a eliminar: ";
+    cin >> matricula;
+
+    aux = BuscarEmbarca(matricula);
+    if (aux != NULL) {
+        raiz = eliminarViaje(raiz, matricula);
+        cout << "Viaje con matrícula " << matricula << " eliminado correctamente." << endl;
+    } else {
+        cout << "No se encontró ningún viaje con esa matrícula." << endl;
     }
 }
