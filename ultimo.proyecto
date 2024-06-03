@@ -281,6 +281,7 @@ void eliminarViaje() {
         cout << "No se encontró ningún viaje con esa matrícula." << endl;
     }
 }
+
 int main() {
     raiz = NULL;
     int opcion = 0;
