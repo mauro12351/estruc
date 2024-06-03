@@ -120,3 +120,115 @@ Embarcacion* insertar(Embarcacion* embarcacion) {
 
     return embarcacion;
 }
+Embarcacion* BuscarEmbarca(int matricula) {
+    aux = raiz;
+    while (aux != NULL && aux->matricula != matricula) {
+        if (matricula < aux->matricula) {
+            aux = aux->izq;
+        } else {
+            aux = aux->der;
+        }
+    }
+    return aux;
+}
+
+void RegistrarEM() {
+    aux = (Embarcacion*)malloc(sizeof(Embarcacion));
+    cout << "Ingrese la matrícula de la embarcación: ";
+    cin >> aux->matricula;
+    cout << "Ingrese el nombre de la embarcación: ";
+    cin.ignore();
+    cin.getline(aux->nombre, 40);
+    cout << "Ingrese el destino del viaje: ";
+    cin.getline(aux->destino, 40);
+    cout << "Ingrese el precio del viaje: ";
+    cin >> aux->precio;
+    cout << "Ingrese el día de salida: ";
+    cin >> aux->dia;
+    cout << "Ingrese el mes de salida: ";
+    cin >> aux->mes;
+    cout << "Ingrese el año de salida: ";
+    cin >> aux->anio;
+    cout << "Ingrese la capacidad de la embarcación: ";
+    cin >> aux->capacidad;
+    aux->izq = NULL;
+    aux->der = NULL;
+    aux->altura = 1;
+
+    raiz = insertar(aux);
+    cout << "Embarcación registrada con éxito." << endl;
+}
+
+void RegistrarPa() {
+    int matricula;
+    cout << "Ingrese la matrícula de la embarcación en la que desea registrarse: ";
+    cin >> matricula;
+
+    aux1 = BuscarEmbarca(matricula);
+
+    if (aux1 != NULL) {
+        if (aux1->numPasajeros < aux1->capacidad) {
+            Pasajero* nuevo = (Pasajero*)malloc(sizeof(Pasajero));
+            cout << "Ingrese el nombre del pasajero: ";
+            cin.ignore();
+            cin.getline(nuevo->nombre, 30);
+            nuevo->sig = NULL;
+
+            if (aux1->cabeza == NULL) {
+                aux1->cabeza = nuevo;
+                aux1->cola = nuevo;
+            } else {
+                aux1->cola->sig = nuevo;
+                aux1->cola = nuevo;
+            }
+
+            aux1->numPasajeros++;
+            cout << "Pasajero registrado con éxito en la embarcación." << endl;
+        } else {
+            cout << "La embarcación alcanzó su capacidad máxima de pasajeros." << endl;
+        }
+    } else {
+        cout << "No se encontró ninguna embarcación con esa matrícula." << endl;
+    }
+}
+
+void listarPa() {
+    int matricula;
+    cout << "Ingrese la matrícula de la embarcación para ver la lista de pasajeros: ";
+    cin >> matricula;
+
+    aux1 = BuscarEmbarca(matricula);
+
+    if (aux1 != NULL) {
+        cout << "Pasajeros registrados en la embarcación " << aux1->nombre << ":" << endl;
+        Pasajero* temp = aux1->cabeza;
+        while (temp != NULL) {
+            cout << temp->nombre << endl;
+            temp = temp->sig;
+        }
+    } else {
+        cout << "No se encontró una embarcación con esa matrícula." << endl;
+    }
+}
+
+void preOrden(Embarcacion* nodo) {
+    if (nodo != NULL) {
+        cout << nodo->matricula << " ";
+        preOrden(nodo->izq);
+        preOrden(nodo->der);
+    }
+}
+
+Embarcacion* encontrarNodoEliminar(Embarcacion* nodo, int matricula) {
+    if (nodo == NULL) {
+        return NULL;
+    }
+
+    if (matricula < nodo->matricula) {
+        return encontrarNodoEliminar(nodo->izq, matricula);
+    } else if (matricula > nodo->matricula) {
+        return encontrarNodoEliminar(nodo->der, matricula);
+    } else {
+        return nodo;
+    }
+}
