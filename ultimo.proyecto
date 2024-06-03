@@ -1,1 +1,122 @@
+#include <iostream>
+#include <string>
+#include <malloc.h>
 
+using namespace std;
+
+struct Pasajero {
+    char nombre[30];
+    Pasajero* sig;
+};
+
+struct Embarcacion {
+    int matricula;
+    char destino[40];
+    int precio;
+    char nombre[40];
+    int dia;
+    int mes;
+    int anio;
+    int capacidad;
+    Embarcacion* izq;
+    Embarcacion* der;
+    Pasajero* cabeza;
+    Pasajero* cola;
+    int numPasajeros;
+    int altura;
+};
+
+Embarcacion* raiz, *aux, *aux1;
+
+int obtenerAltura(Embarcacion* n);
+int mayor(int a, int b);
+int obtenerBalance(Embarcacion* n);
+Embarcacion* rotarDerecha(Embarcacion* y);
+Embarcacion* rotarIzquierda(Embarcacion* x);
+Embarcacion* insertar(Embarcacion* embarcacion);
+Embarcacion* BuscarEmbarca(int matricula);
+void BuscarEM();
+void MostrarLE(Embarcacion* embarcacion);
+void RegistrarEM();
+void RegistrarPa();
+void listarPa();
+void preOrden(Embarcacion* nodo);
+
+int obtenerAltura(Embarcacion* n) {
+    return n == NULL ? 0 : n->altura;
+}
+
+int mayor(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int obtenerBalance(Embarcacion* n) {
+    if (n == NULL) {
+        return 0;
+    }
+    return obtenerAltura(n->izq) - obtenerAltura(n->der);
+}
+
+Embarcacion* rotarDerecha(Embarcacion* y) {
+    Embarcacion* x = y->izq;
+    Embarcacion* T2 = x->der;
+
+    x->der = y;
+    y->izq = T2;
+
+    y->altura = mayor(obtenerAltura(y->izq), obtenerAltura(y->der)) + 1;
+    x->altura = mayor(obtenerAltura(x->izq), obtenerAltura(x->der)) + 1;
+
+    return x;
+}
+
+Embarcacion* rotarIzquierda(Embarcacion* x) {
+    Embarcacion* y = x->der;
+    Embarcacion* T2 = y->izq;
+
+    y->izq = x;
+    x->der = T2;
+
+    x->altura = mayor(obtenerAltura(x->izq), obtenerAltura(x->der)) + 1;
+    y->altura = mayor(obtenerAltura(y->izq), obtenerAltura(y->der)) + 1;
+
+    return y;
+}
+
+Embarcacion* insertar(Embarcacion* embarcacion) {
+    if (embarcacion == NULL) {
+        return aux;
+    }
+
+    if (aux->matricula < embarcacion->matricula) {
+        embarcacion->izq = insertar(embarcacion->izq);
+    } else if (aux->matricula > embarcacion->matricula) {
+        embarcacion->der = insertar(embarcacion->der);
+    } else {
+        return embarcacion;
+    }
+
+    embarcacion->altura = 1 + mayor(obtenerAltura(embarcacion->izq), obtenerAltura(embarcacion->der));
+
+    int balance = obtenerBalance(embarcacion);
+
+    if (balance > 1 && aux->matricula < embarcacion->izq->matricula) {
+        return rotarDerecha(embarcacion);
+    }
+
+    if (balance < -1 && aux->matricula > embarcacion->der->matricula) {
+        return rotarIzquierda(embarcacion);
+    }
+
+    if (balance > 1 && aux->matricula > embarcacion->izq->matricula) {
+        embarcacion->izq = rotarIzquierda(embarcacion->izq);
+        return rotarDerecha(embarcacion);
+    }
+
+    if (balance < -1 && aux->matricula < embarcacion->der->matricula) {
+        embarcacion->der = rotarDerecha(embarcacion->der);
+        return rotarIzquierda(embarcacion);
+    }
+
+    return embarcacion;
+}
