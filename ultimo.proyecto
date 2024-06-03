@@ -281,3 +281,45 @@ void eliminarViaje() {
         cout << "No se encontró ningún viaje con esa matrícula." << endl;
     }
 }
+int main() {
+    raiz = NULL;
+    int opcion = 0;
+    do {
+        cout << "\n-- Menú --" << endl;
+        cout << "1. Registrar una embarcación" << endl;
+        cout << "2. Registrar un pasajero en una embarcación" << endl;
+        cout << "3. Listar pasajeros de una embarcación" << endl;
+        cout << "4. Listar todas las embarcaciones (PreOrden)" << endl;
+        cout << "5. Eliminar viaje" << endl;
+        cout << "6. Salir" << endl;
+        cout << "Opción: ";
+        cin >> opcion;
+        switch (opcion) {
+            case 1:
+                RegistrarEM();
+                break;
+            case 2:
+                RegistrarPa();
+                break;
+            case 3:
+                listarPa();
+                break;
+            case 4:
+                cout << "Recorrido PreOrden del Árbol AVL:" << endl;
+                preOrden(raiz);
+                cout << endl;
+                break;
+            case 5:
+                eliminarViaje();
+                break;
+            case 6:
+                cout << "Saliendo..." << endl;
+                break;
+            default:
+                cout << "Opción incorrecta. Inténtelo de nuevo." << endl;
+                break;
+        }
+    } while (opcion != 6);
+
+    return 0;
+}
